@@ -1,0 +1,17 @@
+components:
+  s3:
+    config:
+      buckets:
+        artifacts:
+          bucket_name: ${BucketName}
+  synthetics-canary:
+    config:
+      canaries:
+        - name: base2website
+          script_location: src/canary.py
+          runtime_version: syn-python-selenium-1.0
+          schedule_expression: rate(1 hour)
+          run_config:
+            EnvironmentVariables:
+              URL:
+                Fn::Sub: ${URL}
